@@ -3,6 +3,7 @@ import com.github.javafaker.Faker;
 import io.qameta.allure.Description;
 import org.example.MainPage;
 import org.example.RegistrationPage;
+import org.example.UserOperations;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ public class UserRegistrationTest {
 
     RegistrationPage registrationPage = page(RegistrationPage.class);
     MainPage mainPage;
+    private static final String HOME= "https://stellarburgers.nomoreparties.site/";
 
     public static Faker faker = new Faker();
     String email = faker.name().lastName() + "@yandex.ru";
@@ -31,10 +33,17 @@ public class UserRegistrationTest {
         // System.setProperty("webdriver.chrome.driver", "src/resources/yandexdriver.exe");
     }
 
+    @After
+    public void tearDown() {
+        UserOperations userOperations = new UserOperations();
+        userOperations.authorizationUserForGetToken(email, password);
+        userOperations.delete();
+        webdriver().driver().close();
+    }
+
     @Test
     @Description ("Регистрация нового пользоватля. Авторизация новым пользователем")
     public void userRegistrationTest (){
-
         mainPage
                 .clickLoginButton()
                 .regLinkClick()
@@ -45,18 +54,15 @@ public class UserRegistrationTest {
                 .setEmail(email)
                 .setPassword(password)
                 .loginButtonClick();
-
         boolean buttonShow = mainPage.arrangeOrderButtonVisible();
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/"));
+        webdriver().shouldHave(url(HOME));
         assertTrue("Button invisible", buttonShow);
-
     }
 
     @Test
-    @Description ("Попытка регистрации нового пользоватля, пароль менее 6 мисволов")
+    @Description ("Попытка регистрации нового пользоватля, пароль менее 6 символов")
     public void userRegistrationIncorrectPasswordTest (){
         String expectedErrorMessage = "Некорректный пароль";
-
         mainPage
                 .clickLoginButton()
                 .regLinkClick()
@@ -64,14 +70,7 @@ public class UserRegistrationTest {
                 .setEmail(email)
                 .setPassword(shortPassword)
                 .regButtonClick();
-
-        String actualErrorMessage = registrationPage.getPassErrorMessageText();
-
+        String actualErrorMessage = registrationPage.checkInvalidPasswordTextDisplayed();
         assertEquals(expectedErrorMessage,actualErrorMessage);
-    }
-
-    @After
-    public void tearDown (){
-        webdriver().driver().close();
     }
 }

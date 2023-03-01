@@ -5,8 +5,7 @@ import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.http.ContentType.JSON;
 
-public class
-Base {
+public class Base {
     public static final String BASE_URL = "https://stellarburgers.nomoreparties.site/api/";
 
     public static RequestSpecification getBaseSpec() {

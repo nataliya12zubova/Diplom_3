@@ -5,6 +5,9 @@ import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+
+import java.util.Objects;
+
 import static com.codeborne.selenide.Selenide.page;
 
 public class MainPage {
@@ -70,19 +73,33 @@ public class MainPage {
     @Step ("Клик на кнопку 'Булки'")
     public MainPage bunButtonClick(){
         bunButton.click();
-        return this;
+        return page(MainPage.class);
+    }
+    @Step("Проверка видимости раздела 'Булки'")
+    public boolean checkBunsClickOpen() {
+        return Objects.requireNonNull(burgerBlock.getAttribute("class")).contains("tab_tab__1SPyG tab_tab_type_current__2BEPc");
     }
 
     @Step ("Клик на кнопку 'Соусы'")
     public MainPage sauceButtonClick(){
         sauceButton.click();
-        return this;
+        return page(MainPage.class);
+    }
+
+    @Step("Проверка видимости раздела Соусы")
+    public boolean checkSaucesClickOpen(){
+        return Objects.requireNonNull(sauceBlock.getAttribute("class")).contains("tab_tab__1SPyG tab_tab_type_current__2BEPc");
     }
 
     @Step ("Клик на кнопку 'Начинки'")
     public MainPage fillingButtonClick(){
         fillingButton.click();
-        return this;
+        return page(MainPage.class);
+    }
+
+    @Step("Проверка видимости раздела Начинки")
+    public boolean checkFillingsClickOpen(){
+        return Objects.requireNonNull(fillingBlock.getAttribute("class")).contains("tab_tab__1SPyG tab_tab_type_current__2BEPc");
     }
 
     // Отображение кнопки "Оформить заказ"

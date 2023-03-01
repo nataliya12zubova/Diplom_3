@@ -19,6 +19,8 @@ public class UserLoginTest {
     String email = user.get("email");
     String password = user.get("password");
     MainPage mainPage;
+    private static final String HOME= "https://stellarburgers.nomoreparties.site/";
+    private static final String LOGIN="https://stellarburgers.nomoreparties.site/login";
 
     @Before
     public void before() {
@@ -42,7 +44,7 @@ public class UserLoginTest {
 
         boolean buttonShow = mainPage.arrangeOrderButtonVisible();
 
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/"));
+        webdriver().shouldHave(url(HOME));
         assertTrue("Button invisible", buttonShow);
 
     }
@@ -59,7 +61,7 @@ public class UserLoginTest {
 
         boolean buttonShow = mainPage.arrangeOrderButtonVisible();
 
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/"));
+        webdriver().shouldHave(url(HOME));
         assertTrue("Button invisible", buttonShow);
     }
 
@@ -77,7 +79,7 @@ public class UserLoginTest {
 
         boolean buttonShow = mainPage.arrangeOrderButtonVisible();
 
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/"));
+        webdriver().shouldHave(url(HOME));
         assertTrue("Button invisible", buttonShow);
 
     }
@@ -96,7 +98,7 @@ public class UserLoginTest {
 
         boolean buttonShow = mainPage.arrangeOrderButtonVisible();
 
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/"));
+        webdriver().shouldHave(url(HOME));
         assertTrue("Button invisible", buttonShow);
 
     }
@@ -113,7 +115,7 @@ public class UserLoginTest {
                 .clickCabinetButton()
                 .exitButtonClick();
 
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/login"));
+        webdriver().shouldHave(url(LOGIN));
     }
 
     @After

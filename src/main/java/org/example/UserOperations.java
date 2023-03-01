@@ -7,12 +7,15 @@ import org.example.model.UserRegisterResponse;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import static io.restassured.RestAssured.given;
+import static org.example.Base.BASE_URL;
 
 public class UserOperations {
 
-    public static final String EMAIL_POSTFIX = "@yandex.ru";
+    private static final String EMAIL_POSTFIX = "@yandex.ru";
+    private static final String REGISTER = BASE_URL + "auth/register";
+    private static final String USER = BASE_URL + "auth/user";
+    private static final String LOGIN = BASE_URL +"auth/login";
 
     /*
      метод регистрации нового пользователя
@@ -42,7 +45,7 @@ public class UserOperations {
                 .and()
                 .body(inputDataMap)
                 .when()
-                .post("auth/register")
+                .post(REGISTER)
                 .body()
                 .as(UserRegisterResponse.class);
 
@@ -61,6 +64,30 @@ public class UserOperations {
         }
         return responseData;
     }
+    /*
+     метод авторизации пользователя, после создания нового пользователя(после UI тестов), для получения токена.
+     */
+    @Step("Авторизация тестового пользователя для получения токена")
+    public void authorizationUserForGetToken(String email, String password) {
+
+        Map<String, String> inputDataMap = new HashMap<>();
+        inputDataMap.put("email", email);
+        inputDataMap.put("password", password);
+
+        UserRegisterResponse response = given()
+                .spec(Base.getBaseSpec())
+                .and()
+                .body(inputDataMap)
+                .when()
+                .post(LOGIN)
+                .body()
+                .as(UserRegisterResponse.class);
+
+        if (Tokens.getAccessToken() == null) {
+            return;
+        }
+        Tokens.setAccessToken(response.getAccessToken().substring(7));
+    }
 
     /*
      метод удаления пользователя по токену, возвращенному после создания
@@ -75,7 +102,7 @@ public class UserOperations {
                 .spec(Base.getBaseSpec())
                 .auth().oauth2(Tokens.getAccessToken())
                 .when()
-                .delete("auth/user")
+                .delete(USER)
                 .then()
                 .statusCode(202);
     }

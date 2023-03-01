@@ -12,13 +12,17 @@ import java.util.Map;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.webdriver;
 import static com.codeborne.selenide.WebDriverConditions.url;
+import static org.example.Base.BASE_URL;
 
 public class PersonalOfficeUserTest {
 
-    Map<String, String> user = new UserOperations().register();
+    public Map<String, String> user = new UserOperations().register();
     String email = user.get("email");
     String password = user.get("password");
     MainPage mainPage;
+    private static final String PROFILE= "https://stellarburgers.nomoreparties.site/account/profile";
+    private static final String LOGIN = "https://stellarburgers.nomoreparties.site/login";
+    private static final String HOME = "https://stellarburgers.nomoreparties.site/";
 
     @Before
     public void before() {
@@ -38,7 +42,7 @@ public class PersonalOfficeUserTest {
                 .loginButtonClick()
                 .clickCabinetButton();
 
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/account/profile"));
+        webdriver().shouldHave(url(PROFILE));
 
     }
 
@@ -49,7 +53,7 @@ public class PersonalOfficeUserTest {
         mainPage
                 .clickCabinetButton();
 
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/login"));
+        webdriver().shouldHave(url(LOGIN));
 
     }
 
@@ -65,7 +69,7 @@ public class PersonalOfficeUserTest {
                 .clickCabinetButton()
                 .constructorButtonClick();
 
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/"));
+        webdriver().shouldHave(url(HOME));
 
     }
 
@@ -81,7 +85,7 @@ public class PersonalOfficeUserTest {
                 .clickCabinetButton()
                 .stellarBurgerClick();
 
-        webdriver().shouldHave(url("https://stellarburgers.nomoreparties.site/"));
+        webdriver().shouldHave(url(HOME));
 
     }
 

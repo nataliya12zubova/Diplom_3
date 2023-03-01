@@ -24,38 +24,25 @@ public class ConstructorTest {
     @Description("Проверка что есть скролл к элементу конструктора 'Булки'. Блок 'Булки' отображается.")
     public void scrollWithBurgerElementTest(){
 
-        mainPage
-                .fillingButtonClick();
-        boolean blockVisible = mainPage.fillingBlock.isDisplayed();
-        assertTrue("Block is invisible",blockVisible);
-        mainPage
-                .bunButtonClick();
-        blockVisible = mainPage.burgerBlock.isDisplayed();
-        assertTrue("Block is invisible",blockVisible);
+        mainPage.fillingButtonClick();
+        mainPage.bunButtonClick();
+        mainPage.checkBunsClickOpen();
     }
 
     @Test
     @Description ("Проверка что есть скролл к элементу конструктора 'Соусы'. Блок 'Соусы' отображается.")
     public void scrollWithSauceElementTest(){
 
-        mainPage
-                .sauceButtonClick();
-
-        boolean blockVisible = mainPage.sauceBlock.isDisplayed();
-
-        assertTrue("Block is invisible",blockVisible);
+        mainPage.sauceButtonClick();
+        mainPage.checkSaucesClickOpen();
     }
 
     @Test
     @Description ("Проверка что есть скролл к элементу конструктора 'Начинки'. Блок 'Начинки' отображается.")
     public void scrollWithFillingElementTest(){
 
-        mainPage
-                .fillingButtonClick();
-
-        boolean blockVisible = mainPage.fillingBlock.isDisplayed();
-
-        assertTrue("Block is invisible",blockVisible);
+        mainPage.fillingButtonClick();
+        mainPage.checkFillingsClickOpen();
     }
 
     @After
