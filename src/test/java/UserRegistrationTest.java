@@ -4,14 +4,14 @@ import io.qameta.allure.Description;
 import org.example.MainPage;
 import org.example.RegistrationPage;
 import org.example.UserOperations;
+import org.example.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class UserRegistrationTest {
 
@@ -20,6 +20,8 @@ public class UserRegistrationTest {
     private static final String HOME= "https://stellarburgers.nomoreparties.site/";
 
     public static Faker faker = new Faker();
+
+    UserOperations userOperationsValue;
     String email = faker.name().lastName() + "@yandex.ru";
     String password = faker.internet().password();
     String name = faker.name().firstName();
@@ -35,9 +37,12 @@ public class UserRegistrationTest {
 
     @After
     public void tearDown() {
+//        UserOperations userOperations =
+//                userOperationsValue == null ?
+//                        new UserOperations() : userOperationsValue;
         UserOperations userOperations = new UserOperations();
         userOperations.authorizationUserForGetToken(email, password);
-        userOperations.delete();
+        UserOperations.delete();
         webdriver().driver().close();
     }
 
@@ -71,6 +76,8 @@ public class UserRegistrationTest {
                 .setPassword(shortPassword)
                 .regButtonClick();
         String actualErrorMessage = registrationPage.checkInvalidPasswordTextDisplayed();
+
+
         assertEquals(expectedErrorMessage,actualErrorMessage);
     }
 }

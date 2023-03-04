@@ -67,7 +67,6 @@ public class RegistrationPage {
         return page(UserLoginPage.class);
     }
 
-
     @Step ("Сообщение об ошибке при неккоректном пароле")
     public String checkInvalidPasswordTextDisplayed() {
         passErrorMessage.shouldBe(Condition.visible);
